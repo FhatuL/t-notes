@@ -1,0 +1,94 @@
+.title {
+	color: var(--text-1);
+	margin-bottom: 0.75rem;
+}
+
+.main {
+	width: 80%;
+	display: flex;
+	flex-wrap: wrap;
+	@media screen and (max-width: 767px) {
+		width: 100%;
+		flex-direction: column;
+		align-items: center;
+	}
+}
+
+.section {
+	width: 100%;
+	display: flex;
+	flex-direction: column;
+	align-items: center;
+	padding-top: 5rem;
+
+	@media screen and (max-width: 767px) {
+		padding-top: 1rem;
+	}
+}
+
+.addCollection {
+	position: fixed;
+	top: 0;
+	bottom: 0;
+	left: 0;
+	right: 0;
+	background-color: var(--background-1-88);
+
+	.editForm {
+		display: flex;
+		flex-direction: column;
+		min-height: 100vh;
+		align-items: center;
+		justify-content: center;
+
+		div.formItem {
+			width: 40%;
+			margin-bottom: 1rem;
+
+			@media screen and (max-width: 1207px) {
+				width: 50%;
+			}
+			@media screen and (max-width: 767px) {
+				width: 90%;
+			}
+
+			label {
+				font-size: 1.25rem;
+				font-weight: 600;
+				color: var(--text-1);
+			}
+			input {
+				width: 100%;
+				border: 1px solid rgba(21, 59, 59, 0.11);
+				border-radius: 7px;
+				box-shadow: 0 3px 6px rgb(0 0 0 / 16%);
+				height: 2.45rem;
+				color: rgba(51, 48, 48, 0.688);
+				font-size: 1rem;
+				padding: 0.15rem 0.25rem;
+				outline: none;
+				transition: box-shadow 0.2s ease-in;
+
+				&:focus {
+					box-shadow: 0 3px 6px rgba(#000000, 0.3);
+				}
+			}
+
+			&:last-child {
+				display: flex;
+				justify-content: flex-end;
+				button {
+					margin-left: 1rem;
+					padding: 0.35rem 0.75rem;
+					border-radius: 7px;
+					border: 1px solid rgb(0 0 0 / 16%);
+					box-shadow: 0 3px 6px rgb(0 0 0 / 16%);
+					background-color: var(--background-3);
+					color: var(--text-2);
+					font-size: 1.25rem;
+					cursor: pointer;
+				}
+			}
+		}
+	}
+}

@@ -1,0 +1,104 @@
+.parent {
+	background-color: var(--background-4);
+	width: 28%;
+	border-radius: 10px;
+	transform: scale(1);
+	height: min-content;
+	transition: transform ease-in-out 0.25s;
+	margin: 1.35rem 0;
+	&:hover {
+		cursor: pointer;
+		transform: scale(1.035);
+	}
+	@media screen and (max-width: 1207px) {
+		width: 42%;
+	}
+
+	@media screen and (max-width: 767px) {
+		width: 80%;
+	}
+	@media screen and (max-width: 767px) {
+		width: 80%;
+	}
+
+	.title,
+	.body,
+	.bottom {
+		padding: 0.35rem 0.95rem;
+		color: var(--text-2);
+		outline: none;
+	}
+
+	.title {
+		font-size: 1.75rem;
+		font-weight: 700;
+	}
+
+	.bottom {
+		display: flex;
+		flex-direction: column;
+		align-items: flex-end;
+	}
+
+	.body {
+		margin-top: 0.25rem;
+		margin-bottom: 2.5rem;
+		text-align: left;
+		white-space: pre-wrap;
+		span {
+			font-size: 1.1rem;
+		}
+	}
+
+	.bottomBorder {
+		width: 95%;
+		margin: 0 auto;
+		background-color: var(--color-3);
+		padding: 0.125rem 0;
+	}
+}
+
+.parentFixed {
+	position: fixed;
+	&:hover {
+		cursor: text;
+		transform: scale(1);
+	}
+
+	.close {
+		position: absolute;
+		right: -1.375rem;
+		top: -1.375rem;
+
+		svg {
+			height: 2.75rem;
+			width: 2.75rem;
+		}
+	}
+
+	.btn {
+		position: absolute;
+		right: 0;
+		top: calc(100% + 0.75rem);
+
+		button {
+			padding: 0.5rem 0.5rem;
+			font-size: 1.1rem;
+			color: var(--text-2);
+			background-color: var(--background-3);
+			border-radius: 6px;
+			border: none;
+			cursor: pointer;
+			transform: scale(1);
+			transition: transform ease-in-out 0.2s;
+
+			&:hover {
+				transform: scale(1.1);
+			}
+		}
+	}
+
+	.btnClose {
+		right: 4rem;
+	}
+}
