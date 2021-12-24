@@ -1,5 +1,9 @@
 import CORS from "cors";
 
-const cors = CORS({origin: true});
+const options: CORS.CorsOptions = {
+	origin: ["http://localhost:3000"],
+};
 
-export default {cors};
+const cors = CORS(options);
+
+export default cors;

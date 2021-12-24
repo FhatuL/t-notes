@@ -1,4 +1,4 @@
-import express, {Request, Response, NextFunction} from "express";
+import express from "express";
 require("dotenv").config();
 import components from "./components";
 import middleware from "./middleware";
@@ -8,7 +8,7 @@ app.disable("x-powered-by");
 const PORT = 5000;
 
 app.use(middleware.cors);
-app.use(express.urlencoded({extended: true}));
+app.use(express.urlencoded({extended: false}));
 app.use(express.json());
 app.use("/notes", components.notes);
 

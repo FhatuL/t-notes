@@ -8,11 +8,11 @@ const getNotes = async (req: Request, res: Response) => {
                       FROM collection_notes
                       INNER JOIN note ON note.note_id = collection_notes.note_id
                       INNER JOIN collection ON collection.collection_id = collection_notes.collection_id
-                      AND collection.collection_id=$1`,
+                      AND collection.collection_id=?`,
 			[parseInt(req.params.id)]
 		);
 
-		res.send(notes.rows);
+		res.send(notes);
 	} catch (error) {
 		console.log(error);
 		res.send("error");

@@ -1,10 +1,10 @@
-import {Pool} from "pg";
+import mariadb from "mariadb";
 
-const pool = new Pool();
-
-pool.on("error", (err, client) => {
-	console.error("Error on idle client.", err);
-	process.exit(-1);
+const pool = mariadb.createPool({
+	user: process.env.DB_USER,
+	password: process.env.DB_PWD,
+	database: process.env.DB_DB,
+	port: parseInt(process.env.DB_PORT as string),
 });
 
 export default {
