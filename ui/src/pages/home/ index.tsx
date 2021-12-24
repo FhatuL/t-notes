@@ -1,12 +1,14 @@
-import React, {useEffect} from "react";
+import React, {useEffect, useState} from "react";
 import {useNavigate} from "react-router-dom";
 import style from "./home.module.scss";
 import Components from "./components";
 import store from "../../store";
+import api from "../../api";
 
 const {Collection} = Components;
 
 const Home = () => {
+	const [inputTitle, setInputTitle] = useState("");
 	const navigate = useNavigate();
 	const {collections, addCollection, toggleAdd, fetchCollection} =
 		store.collectionStore();
@@ -19,13 +21,30 @@ const Home = () => {
 		toggleAdd();
 	};
 
+	const handleSubmit = async () => {
+		const form = new FormData();
+		form.append("name", inputTitle);
+
+		try {
+			const res = await api.post("/notes/collections", {
+				name: inputTitle,
+			});
+
+			if (res.status === 200) {
+				toggleAdd();
+				fetchCollection();
+			}
+		} catch (error) {
+			console.log(error);
+		}
+	};
+
 	const stopPropagation: React.MouseEventHandler<HTMLDivElement> = (e) => {
 		e.stopPropagation();
 	};
-
 	useEffect(() => {
 		fetchCollection();
-	});
+	}, [fetchCollection]);
 	return (
 		<section className={style.section}>
 			<header className={style.header}>
@@ -75,6 +94,10 @@ const Home = () => {
 								id="collection-title"
 								placeholder=""
 								title="collection title"
+								onChange={(e) => {
+									setInputTitle(e.target.value);
+								}}
+								value={inputTitle}
 							/>
 						</div>
 						<div
@@ -82,7 +105,7 @@ const Home = () => {
 							onClick={stopPropagation}
 						>
 							<button onClick={toggleAdd}>close</button>
-							<button>add</button>
+							<button onClick={handleSubmit}>add</button>
 						</div>
 					</main>
 				</section>

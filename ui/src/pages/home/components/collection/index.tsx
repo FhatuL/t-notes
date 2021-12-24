@@ -17,6 +17,15 @@ const Collection: React.FC<Props> = ({title, cover_text, nav, nav_id}) => {
 					else nav();
 				}}
 			>
+				<div className={style.delete}>
+					<button
+						onClick={(e) => {
+							e.stopPropagation();
+						}}
+					>
+						delete
+					</button>
+				</div>
 				<div className={style.cover}>
 					<h1>{cover_text}</h1>
 				</div>

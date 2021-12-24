@@ -20,6 +20,7 @@ interface CollectionState {
 	editNote: boolean;
 	editId: number;
 	addCollection: boolean;
+	prefetched: boolean;
 	toggleAdd: () => void;
 	getNotes: () => Note[];
 	setIndex: (id: number) => void;
@@ -27,51 +28,17 @@ interface CollectionState {
 	toggleEditNote: () => void;
 	setEditId: (id: number) => void;
 	getNote: () => Note;
-	fetchCollection: () => void;
+	fetchCollection: () => Promise<void>;
+	fetchNotes: (id: number) => Promise<void>;
 }
 
-const note1: Note = {
-	id: 1,
-	title: "test note",
-	date: new Date(),
-	content:
-		"If you need slightly less control over formatting than the currently accepted answer, Date#toLocaleDateString can be used to create standard locale-specific renderings",
-};
-
-const note2: Note = {
-	id: 2,
-	title: "test note 2",
-	date: new Date(),
-	content:
-		"What this does is take either an array or a string (which is then split into an array of strings), and returns a final class name (scoped to the current module since it uses the imported styles object of course).",
-};
-
-const note3: Note = {
-	id: 1,
-	title: "test note 3",
-	date: new Date(),
-	content: "What is love, baby don't hurt me",
-};
-
-const data: Collection[] = [
-	{
-		notes: [note1, note2],
-		id: 1,
-		title: "Test Notes",
-	},
-	{
-		id: 2,
-		title: "notes 2",
-		notes: [note3],
-	},
-];
-
 const collectionStore = create<CollectionState>((set, get) => ({
-	collections: data,
+	collections: [],
 	activeIndex: -1,
 	editNote: false,
 	editId: 0,
 	addCollection: false,
+	prefetched: false,
 	toggleAdd: () => {
 		set((state) => ({addCollection: !state.addCollection}));
 	},
@@ -119,12 +86,48 @@ const collectionStore = create<CollectionState>((set, get) => ({
 
 	fetchCollection: async () => {
 		try {
-			const collection = await api.get("/Notes/collections");
-			if (collection.status === 200) {
-				console.log(collection.data);
+			const data = await api.get("/notes/collections");
+			if (data.status === 200) {
+				const collection: Collection[] = data.data;
+				const collections: Collection[] = [];
+				collection.forEach((item) => {
+					collections.push({
+						id: item.id,
+						title: item.title,
+						notes: [],
+					});
+				});
+
+				set((_) => ({collections: collections}));
 			}
 		} catch (error) {
 			console.log(error);
+		}
+	},
+
+	fetchNotes: async (id: number) => {
+		if (!get().prefetched) {
+			try {
+				const results = await api.get(`/notes/collections/${id}`);
+
+				if (results.status === 200) {
+					const notes: Note[] = results.data;
+
+					const collection: Collection[] = get().collections.map(
+						(item) => {
+							if (item.id === id) {
+								item.notes = notes;
+							}
+
+							return item;
+						}
+					);
+
+					set((_) => ({collections: collection, prefetched: true}));
+				}
+			} catch (error) {
+				console.log(error);
+			}
 		}
 	},
 }));
