@@ -59,6 +59,7 @@ const Home = () => {
 							cover_text={collection.id}
 							nav={openCollection}
 							nav_id={collection.id}
+							collection_id={collection.id}
 						/>
 					);
 				})}
@@ -67,6 +68,7 @@ const Home = () => {
 					title="add"
 					cover_text={"+"}
 					nav={addToCollection}
+					isadd={true}
 				/>
 			</main>
 			{addCollection && (

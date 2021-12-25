@@ -1,3 +1,5 @@
+import api from "../../../../api";
+import store from "../../../../store";
 import style from "./collection.module.scss";
 
 interface Props {
@@ -5,9 +7,34 @@ interface Props {
 	cover_text: string | number;
 	nav_id?: number;
 	nav: (id?: number) => void;
+	isadd?: boolean;
+	collection_id?: number;
 }
 
-const Collection: React.FC<Props> = ({title, cover_text, nav, nav_id}) => {
+const Collection: React.FC<Props> = ({
+	title,
+	cover_text,
+	nav,
+	nav_id,
+	isadd,
+	collection_id,
+}) => {
+	const {fetchCollection} = store.collectionStore();
+
+	const deleteCollection = () => {
+		if (collection_id) {
+			api.delete(`/notes/collections/${collection_id}`)
+				.then(async (res) => {
+					if (res.statusText === "OK") {
+						await fetchCollection();
+					}
+				})
+				.catch((err) => {
+					console.log(err);
+				});
+		}
+	};
+
 	return (
 		<div className={style.container}>
 			<div
@@ -17,15 +44,18 @@ const Collection: React.FC<Props> = ({title, cover_text, nav, nav_id}) => {
 					else nav();
 				}}
 			>
-				<div className={style.delete}>
-					<button
-						onClick={(e) => {
-							e.stopPropagation();
-						}}
-					>
-						delete
-					</button>
-				</div>
+				{!isadd && (
+					<div className={style.delete}>
+						<button
+							onClick={(e) => {
+								e.stopPropagation();
+								deleteCollection();
+							}}
+						>
+							delete
+						</button>
+					</div>
+				)}
 				<div className={style.cover}>
 					<h1>{cover_text}</h1>
 				</div>
