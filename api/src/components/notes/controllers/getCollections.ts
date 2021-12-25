@@ -6,7 +6,7 @@ async function getCollections(req: Request, res: Response) {
 		const collections = await db.query(
 			"SELECT collection_id id, collection_name title FROM collection"
 		);
-		console.log(collections);
+
 		// res.status(200).send(collections);
 		res.json(collections).status(200);
 	} catch (error) {

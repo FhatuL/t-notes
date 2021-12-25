@@ -13,10 +13,9 @@ CREATE TABLE IF NOT EXISTS collection(
 );
 
 CREATE TABLE IF NOT EXISTS collection_notes(
-	col_notes_id INT,
-	note_id INT,
-	collection_id INT,
-	PRIMARY KEY(col_notes_id),
+	note_id INT NOT NULL UNIQUE,
+	collection_id INT NOT NULL,
+	PRIMARY KEY(note_id, collection_id),
 	FOREIGN KEY(note_id) REFERENCES note(note_id) ON DELETE CASCADE,
 	FOREIGN KEY(collection_id) REFERENCES collection(collection_id) ON DELETE CASCADE
 );

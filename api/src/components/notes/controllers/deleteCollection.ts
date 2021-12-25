@@ -5,7 +5,7 @@ const deleteCollection = async (req: Request, res: Response) => {
 	const id = parseInt(req.params.id);
 
 	try {
-		await db.query("DELETE FROM collections WHERE collection_id=?", [id]);
+		await db.query("DELETE FROM collection WHERE collection_id=?", [id]);
 		res.status(200).send({
 			message: "collection deleted successfully",
 		});
@@ -15,3 +15,5 @@ const deleteCollection = async (req: Request, res: Response) => {
 		});
 	}
 };
+
+export default deleteCollection;
