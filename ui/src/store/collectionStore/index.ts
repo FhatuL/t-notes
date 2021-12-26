@@ -19,15 +19,16 @@ interface CollectionState {
 	activeIndex: number;
 	editNote: boolean;
 	editId: number;
+	addNote: boolean;
 	addCollection: boolean;
-	prefetched: boolean;
 	toggleAdd: () => void;
 	getNotes: () => Note[];
 	setIndex: (id: number) => void;
 	getCollectionTitle: () => string;
 	toggleEditNote: () => void;
+	toggleAddNote: () => void;
 	setEditId: (id: number) => void;
-	getNote: () => Note;
+	getNote: (type: "edit" | "add") => Note;
 	fetchCollection: () => Promise<void>;
 	fetchNotes: (id: number) => Promise<void>;
 }
@@ -36,9 +37,9 @@ const collectionStore = create<CollectionState>((set, get) => ({
 	collections: [],
 	activeIndex: -1,
 	editNote: false,
+	addNote: false,
 	editId: 0,
 	addCollection: false,
-	prefetched: false,
 	toggleAdd: () => {
 		set((state) => ({addCollection: !state.addCollection}));
 	},
@@ -65,13 +66,19 @@ const collectionStore = create<CollectionState>((set, get) => ({
 	toggleEditNote: () => {
 		set((state) => ({editNote: !state.editNote}));
 	},
-	setEditId: (id: number) => {
+	toggleAddNote: () => {
+		set((state) => ({addNote: !state.addNote}));
+	},
+	setEditId: (id) => {
 		set((_) => ({editId: id}));
 	},
-	getNote: () => {
-		const note = get().collections[get().activeIndex].notes.find((item) => {
-			return item.id === get().editId;
-		});
+	getNote: (type) => {
+		const note: Note | undefined | false =
+			type === "edit"
+				? get().collections[get().activeIndex].notes.find((item) => {
+						return item.id === get().editId;
+				  })
+				: false;
 
 		if (note) {
 			return note as Note;
@@ -106,28 +113,26 @@ const collectionStore = create<CollectionState>((set, get) => ({
 	},
 
 	fetchNotes: async (id: number) => {
-		if (!get().prefetched) {
-			try {
-				const results = await api.get(`/notes/collections/${id}`);
+		try {
+			const results = await api.get(`/notes/collections/${id}`);
 
-				if (results.status === 200) {
-					const notes: Note[] = results.data;
+			if (results.status === 200) {
+				const notes: Note[] = results.data;
 
-					const collection: Collection[] = get().collections.map(
-						(item) => {
-							if (item.id === id) {
-								item.notes = notes;
-							}
-
-							return item;
+				const collection: Collection[] = get().collections.map(
+					(item) => {
+						if (item.id === id) {
+							item.notes = notes;
 						}
-					);
 
-					set((_) => ({collections: collection, prefetched: true}));
-				}
-			} catch (error) {
-				console.log(error);
+						return item;
+					}
+				);
+
+				set((_) => ({collections: collection}));
 			}
+		} catch (error) {
+			console.log(error);
 		}
 	},
 }));

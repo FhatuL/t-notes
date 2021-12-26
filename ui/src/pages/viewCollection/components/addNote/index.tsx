@@ -1,8 +1,9 @@
 import style from "./add.module.scss";
-
+import store from "../../../../store";
 const AddNote = () => {
+	const {toggleAddNote} = store.collectionStore();
 	return (
-		<div className={style.addBtn} title="new note">
+		<div className={style.addBtn} title="new note" onClick={toggleAddNote}>
 			<span>
 				<svg
 					xmlns="http://www.w3.org/2000/svg"

@@ -1,16 +1,32 @@
 import style from "../note/note.module.scss";
-import {useEffect, useState} from "react";
-import store from "../../../../store";
+import {useEffect, useState, useRef} from "react";
 
-const EditNote: React.FC = () => {
-	const {getNote, toggleEditNote} = store.collectionStore();
+interface Props {
+	noteTitle: string;
+	noteContent: string;
+	noteDate: Date;
+	submitFn: (title: string, content: string) => Promise<void>;
+	close: () => void;
+}
+
+const EditNote: React.FC<Props> = ({
+	noteTitle,
+	noteContent,
+	noteDate,
+	submitFn,
+	close,
+}) => {
 	const [title, setTitle] = useState("");
 	const [content, setContent] = useState("");
+	const textArea = useRef<HTMLTextAreaElement>(null);
+	const handleSubmit = async () => {
+		await submitFn(title, content);
+	};
 
 	useEffect(() => {
-		setTitle(getNote().title);
-		setContent(getNote().content);
-	}, [getNote]);
+		setTitle(noteTitle);
+		setContent(noteContent);
+	}, [noteContent, noteTitle]);
 
 	return (
 		<div
@@ -19,21 +35,46 @@ const EditNote: React.FC = () => {
 				e.stopPropagation();
 			}}
 		>
-			<div className={style.title} contentEditable={true}>
-				<span>{title}</span>
+			<div className={style.title}>
+				<span>
+					<input
+						placeholder="title"
+						type="text"
+						value={title}
+						onChange={(e) => {
+							setTitle(e.target.value);
+						}}
+					/>
+				</span>
 			</div>
 			<div className={style.bottomBorder}></div>
-			<div className={style.body} contentEditable={true}>
-				<span>{content}</span>
+			<div className={style.body}>
+				<span>
+					{
+						<textarea
+							autoFocus
+							ref={textArea}
+							value={content}
+							placeholder="enter note here"
+							onChange={(e) => {
+								setContent(e.target.value);
+							}}
+							onInput={() => {
+								if (textArea.current)
+									textArea.current.style.height = `${textArea.current?.scrollHeight}px`;
+							}}
+						/>
+					}
+				</span>
 			</div>
 			<div className={style.bottom}>
-				<span>{getNote().date.toUTCString()}</span>
+				<span>{noteDate.toUTCString()}</span>
 			</div>
 			<div className={[style.btn, style.btnSave].join(" ")}>
-				<button>save</button>
+				<button onClick={handleSubmit}>save</button>
 			</div>
 			<div className={[style.btn, style.btnClose].join(" ")}>
-				<button onClick={toggleEditNote}>close</button>
+				<button onClick={close}>close</button>
 			</div>
 		</div>
 	);

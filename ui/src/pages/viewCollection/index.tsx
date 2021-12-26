@@ -3,22 +3,22 @@ import style from "./view.module.scss";
 import components from "./components";
 import store from "../../store";
 import {useEffect} from "react";
-import EditOverlay from "./components/editOverlay";
 
 const ViewCollection = () => {
 	const params = useParams();
 	const {getNotes, fetchNotes, activeIndex} = store.collectionStore();
 	const {setIndex} = store.collectionStore();
 	const {getCollectionTitle} = store.collectionStore();
-	const {editNote, fetchCollection} = store.collectionStore();
+	const {editNote, addNote, fetchCollection} = store.collectionStore();
 
 	useEffect(() => {
 		const id = parseInt(params.id as string);
 
 		fetchCollection().then((_) => {
 			fetchNotes(id)
-				.then((x) => {
+				.then(async (x) => {
 					setIndex(id);
+					await fetchNotes(id);
 				})
 				.catch((err) => {
 					console.log(err);
@@ -38,7 +38,7 @@ const ViewCollection = () => {
 								<components.Note
 									content={note.content}
 									id={note.id}
-									date={note.date}
+									date={new Date(note.date)}
 									title={note.title}
 									key={note.id}
 								/>
@@ -55,7 +55,8 @@ const ViewCollection = () => {
 					)}
 				</main>
 			</section>
-			{editNote && <EditOverlay />}
+			{editNote && <components.EditOverlay />}
+			{addNote && <components.AddOverlay />}
 		</>
 	);
 };

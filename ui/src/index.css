@@ -7,17 +7,14 @@
 	--background-4: #fc4445;
 	--text-1: #3d405b;
 	--text-2: #ffffff;
+	--text-2-80: #ffffffce;
 	--color-1: #55bcc9;
 	--color-2: #3feee6;
 	--color-3: #ff0001;
 }
 body {
 	margin: 0;
-	font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", "Roboto",
-		"Oxygen", "Ubuntu", "Cantarell", "Fira Sans", "Droid Sans",
-		"Helvetica Neue", sans-serif;
-	-webkit-font-smoothing: antialiased;
-	-moz-osx-font-smoothing: grayscale;
+
 	display: flex;
 	flex-direction: column;
 	min-height: 100vh;
@@ -27,6 +24,11 @@ body {
 	box-sizing: border-box;
 	margin: 0;
 	padding: 0;
+	font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", "Roboto",
+		"Oxygen", "Ubuntu", "Cantarell", "Fira Sans", "Droid Sans",
+		"Helvetica Neue", sans-serif;
+	-webkit-font-smoothing: antialiased;
+	-moz-osx-font-smoothing: grayscale;
 }
 
 #root {

@@ -59,6 +59,23 @@
 }
 
 .parentFixed {
+	.body {
+		span {
+			::placeholder {
+				color: var(--text-2-80);
+			}
+			textarea {
+				width: 100%;
+				height: auto;
+				font-size: inherit;
+				border: none;
+				background-color: transparent;
+				color: inherit;
+				outline: none;
+				resize: none;
+			}
+		}
+	}
 	position: fixed;
 	&:hover {
 		cursor: text;

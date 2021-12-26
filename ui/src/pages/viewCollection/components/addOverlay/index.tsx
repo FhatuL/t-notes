@@ -1,22 +1,18 @@
-import style from "./edit.module.scss";
+import style from "../editOverlay/edit.module.scss";
 import EditNote from "../editNote";
 import store from "../../../../store";
 import api from "../../../../api";
 import {useParams} from "react-router-dom";
 
-const EditOverlay = () => {
-	const {toggleEditNote, getNote, editId, fetchNotes} =
-		store.collectionStore();
+const AddOverlay = () => {
+	const {toggleAddNote, getNote, fetchNotes} = store.collectionStore();
 	const params = useParams();
 	const submit = async (title: string, content: string): Promise<void> => {
 		try {
-			const res = await api.post(
-				`/notes/collections/${params.id}/${editId}`,
-				{
-					title,
-					content,
-				}
-			);
+			const res = await api.post(`/notes/collections/${params.id}/`, {
+				title,
+				content,
+			});
 
 			if (res.statusText === "OK") {
 				await fetchNotes(parseInt(params.id as string));
@@ -24,17 +20,17 @@ const EditOverlay = () => {
 		} catch (error) {
 			console.log(error);
 		} finally {
-			toggleEditNote();
+			toggleAddNote();
 		}
 	};
 	return (
 		<section className={style.editOverlay}>
-			<main className={style.main} onClick={toggleEditNote}>
+			<main className={style.main} onClick={toggleAddNote}>
 				<EditNote
-					close={toggleEditNote}
-					noteContent={getNote("edit").content}
-					noteDate={new Date(getNote("edit").date)}
-					noteTitle={getNote("edit").title}
+					close={toggleAddNote}
+					noteContent={getNote("add").content}
+					noteDate={getNote("add").date}
+					noteTitle={getNote("add").title}
 					submitFn={submit}
 				/>
 			</main>
@@ -42,4 +38,4 @@ const EditOverlay = () => {
 	);
 };
 
-export default EditOverlay;
+export default AddOverlay;
