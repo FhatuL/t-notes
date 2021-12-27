@@ -8,5 +8,6 @@ notes.post("/collections", controllers.createCollection);
 notes.get("/collections/:id(\\d+)", controllers.getNotes);
 notes.post("/collections/:id(\\d+)", controllers.createNote);
 notes.delete("/collections/:id(\\d+)", controllers.deleteCollection);
+notes.put("/collections/:id(\\d+)/:id(\\d+)", controllers.editNote);
 
 export default notes;

@@ -3,6 +3,7 @@ import getCollections from "./getCollections";
 import deleteCollection from "./deleteCollection";
 import getNotes from "./getNotes";
 import createNote from "./createNote";
+import editNote from "./editNote";
 
 export default {
 	createCollection,
@@ -10,4 +11,5 @@ export default {
 	deleteCollection,
 	getNotes,
 	createNote,
+	editNote,
 };
