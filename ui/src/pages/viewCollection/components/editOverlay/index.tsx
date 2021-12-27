@@ -10,11 +10,12 @@ const EditOverlay = () => {
 	const params = useParams();
 	const submit = async (title: string, content: string): Promise<void> => {
 		try {
-			const res = await api.post(
+			const res = await api.put(
 				`/notes/collections/${params.id}/${editId}`,
 				{
 					title,
 					content,
+					id: editId,
 				}
 			);
 

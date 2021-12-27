@@ -59,6 +59,21 @@
 }
 
 .parentFixed {
+	.title {
+		span {
+			::placeholder {
+				color: var(--text-2-80);
+			}
+			input {
+				font-size: inherit;
+				background-color: transparent;
+				border: none;
+				outline: none;
+				color: inherit;
+				font-weight: inherit;
+			}
+		}
+	}
 	.body {
 		span {
 			::placeholder {
