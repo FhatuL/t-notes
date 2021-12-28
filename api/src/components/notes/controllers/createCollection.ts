@@ -20,7 +20,7 @@ const create = async (req: Request, res: Response) => {
 			});
 		}
 	} else {
-		res.status(401).send("hmmm");
+		res.status(401).send({message: "hmmm"});
 	}
 };
 

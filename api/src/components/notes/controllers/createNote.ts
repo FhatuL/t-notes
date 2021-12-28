@@ -8,11 +8,10 @@ const createNote = async (req: Request, res: Response) => {
 	const col_id = parseInt(req.params.id);
 	const content = req.body.content;
 	const title = req.body.title;
-	console.log(req.body);
+
 	db.conn
 		.then(async (conn) => {
 			try {
-				console.log("here");
 				await conn.beginTransaction();
 				await conn.query(
 					"INSERT INTO note(note_title,note_content) VALUES(?,?);",
@@ -45,7 +44,6 @@ const createNote = async (req: Request, res: Response) => {
 			}
 		})
 		.catch((err) => {
-			console.log(err);
 			res.status(500).send({
 				message: "Internal server error",
 			});
