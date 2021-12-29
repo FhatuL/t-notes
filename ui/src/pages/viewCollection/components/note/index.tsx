@@ -1,16 +1,19 @@
 import style from "./note.module.scss";
 import {Note as NoteType} from "../../../../store/collectionStore";
 import store from "../../../../store";
+import {useRef} from "react";
 
 const Note: React.FC<NoteType> = ({id, content, date, title}) => {
 	const {toggleEditNote, setEditId} = store.collectionStore();
-
+	const noteContent = useRef<HTMLSpanElement>(null);
 	return (
 		<div
 			className={style.parent}
 			onClick={() => {
 				setEditId(id);
-				toggleEditNote();
+				if (noteContent.current) {
+					toggleEditNote(noteContent.current.offsetHeight);
+				}
 			}}
 		>
 			<div className={style.title}>
@@ -18,10 +21,17 @@ const Note: React.FC<NoteType> = ({id, content, date, title}) => {
 			</div>
 			<div className={style.bottomBorder}></div>
 			<div className={style.body}>
-				<span>{content}</span>
+				<span ref={noteContent}>{content}</span>
 			</div>
 			<div className={style.bottom}>
-				<span>{date.toUTCString()}</span>
+				<span>
+					{date.toLocaleDateString("en-GB", {
+						weekday: "short",
+						year: "2-digit",
+						month: "short",
+						day: "2-digit",
+					})}
+				</span>
 			</div>
 		</div>
 	);

@@ -20,12 +20,13 @@ interface CollectionState {
 	editNote: boolean;
 	editId: number;
 	addNote: boolean;
+	contentHeight: number;
 	addCollection: boolean;
 	toggleAdd: () => void;
 	getNotes: () => Note[];
 	setIndex: (id: number) => void;
 	getCollectionTitle: () => string;
-	toggleEditNote: () => void;
+	toggleEditNote: (height?: number) => void;
 	toggleAddNote: () => void;
 	setEditId: (id: number) => void;
 	getNote: (type: "edit" | "add") => Note;
@@ -39,6 +40,7 @@ const collectionStore = create<CollectionState>((set, get) => ({
 	editNote: false,
 	addNote: false,
 	editId: 0,
+	contentHeight: 0,
 	addCollection: false,
 	toggleAdd: () => {
 		set((state) => ({addCollection: !state.addCollection}));
@@ -63,8 +65,11 @@ const collectionStore = create<CollectionState>((set, get) => ({
 		}
 		return get().collections[get().activeIndex].title;
 	},
-	toggleEditNote: () => {
-		set((state) => ({editNote: !state.editNote}));
+	toggleEditNote: (height) => {
+		set((state) => ({
+			editNote: !state.editNote,
+			contentHeight: height ? height : 0,
+		}));
 	},
 	toggleAddNote: () => {
 		set((state) => ({addNote: !state.addNote}));

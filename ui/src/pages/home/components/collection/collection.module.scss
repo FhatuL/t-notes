@@ -1,6 +1,7 @@
 .parent {
 	position: relative;
 	background-color: var(--background-2);
+	border: 1px solid #0000002c;
 	width: 100%;
 	height: 10.5rem;
 	border-radius: 16px;
@@ -18,6 +19,7 @@
 		width: 100%;
 		height: inherit;
 		position: absolute;
+		border: 1px solid #00000052;
 		z-index: 3;
 		background-color: var(--color-1);
 		border-radius: inherit;
@@ -64,6 +66,7 @@
 	}
 }
 
+.edit,
 .delete {
 	position: absolute;
 	top: -2.35rem;
@@ -71,16 +74,36 @@
 	z-index: 1;
 	transition: all ease-in-out 0.2s;
 	&:hover {
-		top: -3rem;
+		top: -3.5rem;
 	}
 	button {
 		cursor: pointer;
 		background-color: var(--background-3);
 		color: var(--text-2);
-		padding: 0.65rem 0.9rem;
+		padding: 0.5rem 0.5rem;
 		border: none;
 		border-radius: 10px;
 		font-weight: 600;
-		font-size: 1.2rem;
+		font-size: 1rem;
+
+		svg {
+			width: 2.25rem;
+			height: 2.25rem;
+			.path {
+				fill: var(--text-2);
+			}
+		}
+	}
+}
+
+.edit {
+	left: -0.25rem;
+	right: unset;
+
+	svg {
+		background-color: var(--background-3);
+		.path {
+			fill: var(--text-2);
+		}
 	}
 }

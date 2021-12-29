@@ -6,6 +6,7 @@ interface Props {
 	noteContent: string;
 	noteDate: Date;
 	submitFn: (title: string, content: string) => Promise<void>;
+	contentHeight?: number;
 	close: () => void;
 }
 
@@ -15,6 +16,7 @@ const EditNote: React.FC<Props> = ({
 	noteDate,
 	submitFn,
 	close,
+	contentHeight,
 }) => {
 	const [title, setTitle] = useState("");
 	const [content, setContent] = useState("");
@@ -52,6 +54,11 @@ const EditNote: React.FC<Props> = ({
 				<span>
 					{
 						<textarea
+							style={
+								contentHeight
+									? {height: `${contentHeight}px`}
+									: {}
+							}
 							autoFocus
 							ref={textArea}
 							value={content}
@@ -60,15 +67,23 @@ const EditNote: React.FC<Props> = ({
 								setContent(e.target.value);
 							}}
 							onInput={() => {
-								if (textArea.current)
+								if (textArea.current) {
 									textArea.current.style.height = `${textArea.current?.scrollHeight}px`;
+								}
 							}}
 						/>
 					}
 				</span>
 			</div>
 			<div className={style.bottom}>
-				<span>{noteDate.toUTCString()}</span>
+				<span>
+					{noteDate.toLocaleDateString("en-GB", {
+						weekday: "short",
+						year: "2-digit",
+						month: "short",
+						day: "2-digit",
+					})}
+				</span>
 			</div>
 			<div className={[style.btn, style.btnSave].join(" ")}>
 				<button onClick={handleSubmit}>save</button>

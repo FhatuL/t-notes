@@ -48,13 +48,13 @@ const Home = () => {
 	return (
 		<section className={style.section}>
 			<header className={style.header}>
-				<h1 className={style.title}>TRASH NOTES</h1>
+				<h1 className={style.title}>CATEGORIES</h1>
 			</header>
 			<main className={style.main}>
-				{collections.map((collection, index) => {
+				{collections.map((collection) => {
 					return (
 						<Collection
-							key={index}
+							key={collection.id}
 							title={collection.title}
 							cover_text={collection.id}
 							nav={openCollection}
@@ -96,6 +96,7 @@ const Home = () => {
 								id="collection-title"
 								placeholder=""
 								title="collection title"
+								autoFocus
 								onChange={(e) => {
 									setInputTitle(e.target.value);
 								}}
