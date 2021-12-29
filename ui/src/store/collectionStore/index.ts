@@ -22,6 +22,9 @@ interface CollectionState {
 	addNote: boolean;
 	contentHeight: number;
 	addCollection: boolean;
+	editCol: boolean;
+	editColId: number;
+	toggleEditCol: (id?: number) => void;
 	toggleAdd: () => void;
 	getNotes: () => Note[];
 	setIndex: (id: number) => void;
@@ -32,6 +35,7 @@ interface CollectionState {
 	getNote: (type: "edit" | "add") => Note;
 	fetchCollection: () => Promise<void>;
 	fetchNotes: (id: number) => Promise<void>;
+	getEditColTitle: () => string;
 }
 
 const collectionStore = create<CollectionState>((set, get) => ({
@@ -39,9 +43,14 @@ const collectionStore = create<CollectionState>((set, get) => ({
 	activeIndex: -1,
 	editNote: false,
 	addNote: false,
+	editCol: false,
 	editId: 0,
+	editColId: 0,
 	contentHeight: 0,
 	addCollection: false,
+	toggleEditCol: (id) => {
+		set((state) => ({editCol: !state.editCol, editColId: id ? id : 0}));
+	},
 	toggleAdd: () => {
 		set((state) => ({addCollection: !state.addCollection}));
 	},
@@ -139,6 +148,13 @@ const collectionStore = create<CollectionState>((set, get) => ({
 		} catch (error) {
 			console.log(error);
 		}
+	},
+	getEditColTitle: () => {
+		const collection = get().collections.find((item) => {
+			return item.id === get().editColId;
+		});
+
+		return collection ? collection.title : "";
 	},
 }));
 

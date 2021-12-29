@@ -19,7 +19,7 @@ const Collection: React.FC<Props> = ({
 	isadd,
 	collection_id,
 }) => {
-	const {fetchCollection} = store.collectionStore();
+	const {fetchCollection, toggleEditCol} = store.collectionStore();
 
 	const deleteCollection = () => {
 		if (collection_id) {
@@ -35,7 +35,9 @@ const Collection: React.FC<Props> = ({
 		}
 	};
 
-	const editCollection = async () => {};
+	const editCollection = async () => {
+		toggleEditCol(collection_id);
+	};
 
 	return (
 		<div className={style.container}>

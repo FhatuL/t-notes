@@ -1,4 +1,6 @@
 import Collection from "./collection";
-const Components = {Collection};
+import EditCollection from "./editCollection";
+
+const Components = {Collection, EditCollection};
 
 export default Components;

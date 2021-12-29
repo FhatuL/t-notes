@@ -10,7 +10,7 @@ const {Collection} = Components;
 const Home = () => {
 	const [inputTitle, setInputTitle] = useState("");
 	const navigate = useNavigate();
-	const {collections, addCollection, toggleAdd, fetchCollection} =
+	const {collections, addCollection, toggleAdd, fetchCollection, editCol} =
 		store.collectionStore();
 
 	const openCollection = (id?: number) => {
@@ -112,6 +112,10 @@ const Home = () => {
 						</div>
 					</main>
 				</section>
+			)}
+
+			{editCol && (
+				<Components.EditCollection stopPropagation={stopPropagation} />
 			)}
 		</section>
 	);
