@@ -9,6 +9,7 @@ const {Collection} = Components;
 
 const Home = () => {
 	const [inputTitle, setInputTitle] = useState("");
+	const [disableSave, setDisableSave] = useState(false);
 	const navigate = useNavigate();
 	const {collections, addCollection, toggleAdd, fetchCollection, editCol} =
 		store.collectionStore();
@@ -22,8 +23,7 @@ const Home = () => {
 	};
 
 	const handleSubmit = async () => {
-		const form = new FormData();
-		form.append("name", inputTitle);
+		setDisableSave(true);
 
 		try {
 			const res = await api.post("/notes/collections", {
@@ -36,6 +36,8 @@ const Home = () => {
 			}
 		} catch (error) {
 			console.log(error);
+		} finally {
+			setDisableSave(false);
 		}
 	};
 
@@ -108,7 +110,12 @@ const Home = () => {
 							onClick={stopPropagation}
 						>
 							<button onClick={toggleAdd}>close</button>
-							<button onClick={handleSubmit}>add</button>
+							<button
+								disabled={disableSave ? true : false}
+								onClick={handleSubmit}
+							>
+								add
+							</button>
 						</div>
 					</main>
 				</section>

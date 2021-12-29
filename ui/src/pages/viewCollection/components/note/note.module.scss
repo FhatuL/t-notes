@@ -135,6 +135,14 @@
 		}
 	}
 
+	.btnDelete {
+		right: unset;
+		left: 0;
+		button {
+			color: var(--color-3);
+		}
+	}
+
 	.btnClose {
 		right: 4rem;
 	}

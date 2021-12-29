@@ -7,6 +7,7 @@ interface Props {
 	noteDate: Date;
 	submitFn: (title: string, content: string) => Promise<void>;
 	contentHeight?: number;
+	deleteFN?: () => Promise<void>;
 	close: () => void;
 }
 
@@ -17,6 +18,7 @@ const EditNote: React.FC<Props> = ({
 	submitFn,
 	close,
 	contentHeight,
+	deleteFN,
 }) => {
 	const [title, setTitle] = useState("");
 	const [content, setContent] = useState("");
@@ -85,6 +87,11 @@ const EditNote: React.FC<Props> = ({
 					})}
 				</span>
 			</div>
+			{deleteFN && (
+				<div className={[style.btn, style.btnDelete].join(" ")}>
+					<button onClick={deleteFN}>delete</button>
+				</div>
+			)}
 			<div className={[style.btn, style.btnSave].join(" ")}>
 				<button onClick={handleSubmit}>save</button>
 			</div>

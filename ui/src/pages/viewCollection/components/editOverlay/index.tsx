@@ -8,7 +8,20 @@ const EditOverlay = () => {
 	const {toggleEditNote, getNote, editId, fetchNotes, contentHeight} =
 		store.collectionStore();
 	const params = useParams();
-
+	const deleteNote = async () => {
+		try {
+			const res = await api.delete(
+				`/notes/collections/${params.id}/${editId}`
+			);
+			if (res.statusText === "OK") {
+				await fetchNotes(parseInt(params.id as string));
+			}
+		} catch (error) {
+			console.log(error);
+		} finally {
+			toggleEditNote();
+		}
+	};
 	const submit = async (title: string, content: string): Promise<void> => {
 		try {
 			const res = await api.put(
@@ -44,6 +57,7 @@ const EditOverlay = () => {
 					noteTitle={getNote("edit").title}
 					submitFn={submit}
 					contentHeight={contentHeight}
+					deleteFN={deleteNote}
 				/>
 			</main>
 		</section>
