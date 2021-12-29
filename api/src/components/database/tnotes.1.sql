@@ -19,3 +19,29 @@ CREATE TABLE IF NOT EXISTS collection_notes(
 	FOREIGN KEY(note_id) REFERENCES note(note_id) ON DELETE CASCADE,
 	FOREIGN KEY(collection_id) REFERENCES collection(collection_id) ON DELETE CASCADE
 );
+
+
+DELIMITER //
+CREATE OR REPLACE PROCEDURE delete_collection(col_id INT)
+BEGIN
+	DECLARE done INT DEFAULT FALSE;
+	DECLARE x INT;
+	DECLARE cur1 CURSOR FOR SELECT note_id FROM collection_notes WHERE collection_id=col_id;
+	DECLARE CONTINUE HANDLER FOR NOT FOUND SET done = TRUE;
+
+	OPEN cur1;
+	
+	read_loop: LOOP
+		FETCH cur1 INTO x;
+
+		IF done THEN
+			LEAVE read_loop;
+		END IF;
+	
+		DELETE FROM note WHERE note_id = x;
+	END LOOP;
+	CLOSE cur1;
+
+	DELETE FROM collection WHERE collection_id =col_id;
+END //
+DELIMITER ;
