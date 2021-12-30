@@ -4,7 +4,7 @@ import {Request, Response} from "express";
 const editNote = async (req: Request, res: Response) => {
 	const title = req.body.title;
 	const content = req.body.content;
-	const id = parseInt(req.body.id);
+	const id = parseInt(req.params.noteId);
 
 	try {
 		await db.query(

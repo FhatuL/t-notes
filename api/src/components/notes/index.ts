@@ -9,6 +9,7 @@ notes.get("/collections/:id(\\d+)", controllers.getNotes);
 notes.put("/collections/:id(\\d+)", controllers.editCollection);
 notes.post("/collections/:id(\\d+)", controllers.createNote);
 notes.delete("/collections/:id(\\d+)", controllers.deleteCollection);
-notes.put("/collections/:id(\\d+)/:id(\\d+)", controllers.editNote);
+notes.put("/collections/:id(\\d+)/:noteId(\\d+)", controllers.editNote);
+notes.delete("/collections/:id(\\d+)/:noteId(\\d+)", controllers.deleteNote);
 
 export default notes;
