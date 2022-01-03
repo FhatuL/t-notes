@@ -28,5 +28,13 @@
 	span {
 		position: absolute;
 		top: -4.5%;
+
+		@media (prefers-color-scheme: dark) {
+			svg {
+				.path {
+					fill: var(--text-1);
+				}
+			}
+		}
 	}
 }
