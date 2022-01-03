@@ -18,7 +18,6 @@ const ViewCollection = () => {
 			fetchNotes(id)
 				.then(async (x) => {
 					setIndex(id);
-					await fetchNotes(id);
 				})
 				.catch((err) => {
 					console.log(err);

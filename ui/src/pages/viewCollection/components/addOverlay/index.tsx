@@ -14,7 +14,7 @@ const AddOverlay = () => {
 				content,
 			});
 
-			if (res.statusText === "OK") {
+			if (res.status === 200) {
 				await fetchNotes(parseInt(params.id as string));
 			}
 		} catch (error) {

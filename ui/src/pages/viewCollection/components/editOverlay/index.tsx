@@ -13,7 +13,7 @@ const EditOverlay = () => {
 			const res = await api.delete(
 				`/notes/collections/${params.id}/${editId}`
 			);
-			if (res.statusText === "OK") {
+			if (res.status === 200) {
 				await fetchNotes(parseInt(params.id as string));
 			}
 		} catch (error) {
@@ -29,11 +29,10 @@ const EditOverlay = () => {
 				{
 					title,
 					content,
-					id: editId,
 				}
 			);
 
-			if (res.statusText === "OK") {
+			if (res.status === 200) {
 				await fetchNotes(parseInt(params.id as string));
 			}
 		} catch (error) {

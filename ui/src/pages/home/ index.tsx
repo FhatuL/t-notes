@@ -31,13 +31,13 @@ const Home = () => {
 			});
 
 			if (res.status === 200) {
-				toggleAdd();
 				fetchCollection();
 			}
 		} catch (error) {
 			console.log(error);
 		} finally {
 			setDisableSave(false);
+			toggleAdd();
 		}
 	};
 
@@ -53,12 +53,12 @@ const Home = () => {
 				<h1 className={style.title}>CATEGORIES</h1>
 			</header>
 			<main className={style.main}>
-				{collections.map((collection) => {
+				{collections.map((collection, index) => {
 					return (
 						<Collection
 							key={collection.id}
 							title={collection.title}
-							cover_text={collection.id}
+							cover_text={index + 1}
 							nav={openCollection}
 							nav_id={collection.id}
 							collection_id={collection.id}

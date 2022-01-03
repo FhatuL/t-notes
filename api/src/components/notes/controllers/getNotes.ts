@@ -15,7 +15,7 @@ const getNotes = async (req: Request, res: Response) => {
 
 		res.send(notes);
 	} catch (error) {
-		res.status(500).send({message: "internal error occured"});
+		res.status(500).send(error);
 	}
 };
 

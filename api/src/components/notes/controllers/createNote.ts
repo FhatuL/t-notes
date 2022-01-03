@@ -9,7 +9,7 @@ const createNote = async (req: Request, res: Response) => {
 	const content = req.body.content;
 	const title = req.body.title;
 
-	db.conn
+	db.conn()
 		.then(async (conn) => {
 			try {
 				await conn.beginTransaction();
@@ -44,9 +44,7 @@ const createNote = async (req: Request, res: Response) => {
 			}
 		})
 		.catch((err) => {
-			res.status(500).send({
-				message: "Internal server error",
-			});
+			res.status(500).send(err);
 		});
 };
 

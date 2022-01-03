@@ -25,7 +25,7 @@ const Collection: React.FC<Props> = ({
 		if (collection_id) {
 			api.delete(`/notes/collections/${collection_id}`)
 				.then(async (res) => {
-					if (res.statusText === "OK") {
+					if (res.status === 200) {
 						await fetchCollection();
 					}
 				})

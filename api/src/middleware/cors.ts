@@ -1,7 +1,7 @@
 import CORS from "cors";
 
 const options: CORS.CorsOptions = {
-	origin: ["http://localhost:3000"],
+	origin: ["http://localho.st:3000", "https://fhatul.github.io"],
 };
 
 const cors = CORS(options);

@@ -10,5 +10,5 @@ const pool = mariadb.createPool({
 export default {
 	query: (text: string, params?: Array<string | number>) =>
 		pool.query(text, params),
-	conn: pool.getConnection(),
+	conn: () => pool.getConnection(),
 };

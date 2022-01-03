@@ -4,26 +4,27 @@ CREATE TABLE IF NOT EXISTS note(
 	note_content TEXT,
 	note_date DATETIME DEFAULT UTC_TIMESTAMP,
 	PRIMARY KEY(note_id)
-) ENGINE=INNODB;
+);
 
 CREATE TABLE IF NOT EXISTS collection(
-	collection_id INT NOT NULL auto_increment,
 	collection_name VARCHAR(50) NOT NULL,
+	collection_id INT NOT NULL auto_increment,
 	collection_date DATETIME DEFAULT UTC_TIMESTAMP,
 	PRIMARY KEY(collection_id)
-) ENGINE=INNODB;
+);
 
 CREATE TABLE IF NOT EXISTS collection_notes(
-	note_id INT NOT NULL UNIQUE,
+	col_notes_id INT NOT NULL,
+	note_id INT NOT NULL,
 	collection_id INT NOT NULL,
-	PRIMARY KEY(note_id, collection_id),
+	PRIMARY KEY(col_notes_id),
 	FOREIGN KEY(note_id) REFERENCES note(note_id) ON DELETE CASCADE,
 	FOREIGN KEY(collection_id) REFERENCES collection(collection_id) ON DELETE CASCADE
-) ENGINE=INNODB;
+);
 
 
 DELIMITER //
-CREATE OR REPLACE PROCEDURE delete_collection(col_id INT)
+CREATE PROCEDURE delete_collection(col_id INT)
 BEGIN
 	DECLARE done INT DEFAULT FALSE;
 	DECLARE x INT;
@@ -42,7 +43,5 @@ BEGIN
 		DELETE FROM note WHERE note_id = x;
 	END LOOP;
 	CLOSE cur1;
-
-	DELETE FROM collection WHERE collection_id =col_id;
 END //
 DELIMITER ;
