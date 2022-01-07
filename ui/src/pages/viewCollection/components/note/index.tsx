@@ -30,6 +30,8 @@ const Note: React.FC<NoteType> = ({id, content, date, title}) => {
 						year: "2-digit",
 						month: "short",
 						day: "2-digit",
+						hour: "2-digit",
+						minute: "2-digit",
 					})}
 				</span>
 			</div>

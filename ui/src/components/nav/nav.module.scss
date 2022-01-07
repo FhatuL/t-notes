@@ -2,10 +2,14 @@
 	background-color: var(--background-5);
 	margin-bottom: 1rem;
 	box-shadow: 0 3px 6px #0000003b;
-	padding: 1.45rem 1.2rem;
+	padding: 1.45rem 1.6rem;
+	display: flex;
+	justify-content: space-between;
+	align-items: center;
+	color: var(--text-1);
 
 	a {
-		color: var(--text-1);
+		color: inherit;
 		text-decoration: underline;
 		font-weight: 900;
 		font-size: 1.5rem;

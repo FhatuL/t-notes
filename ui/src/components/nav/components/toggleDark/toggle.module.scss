@@ -1,0 +1,23 @@
+.parent {
+	display: flex;
+	align-items: center;
+	justify-content: space-between;
+	padding: 0.5rem;
+
+	&:hover {
+		cursor: pointer;
+	}
+
+	.item {
+		display: flex;
+		margin: 0 0.55rem;
+
+		svg {
+			width: 2rem;
+			height: 2rem;
+			path {
+				fill: var(--text-1);
+			}
+		}
+	}
+}
