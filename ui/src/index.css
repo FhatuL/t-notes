@@ -37,6 +37,8 @@ body {
 	font-family: "Mali", cursive;
 	-webkit-font-smoothing: antialiased;
 	-moz-osx-font-smoothing: grayscale;
+
+	transition: background-color 0.7s ease-in-out, color 0.3s ease-in-out;
 }
 
 #root {
