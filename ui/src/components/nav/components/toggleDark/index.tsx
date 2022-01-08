@@ -15,6 +15,7 @@ const ToggleDark = () => {
 
 	const toggleDarkMode = () => {
 		setIsDark(!isDark);
+		window.localStorage.setItem("isDarkTheme", isDark ? "false" : "true");
 	};
 
 	const ToggleComp: React.FC<Props> = ({children}) => {
@@ -22,11 +23,20 @@ const ToggleDark = () => {
 	};
 
 	useEffect(() => {
+		const isDarkTheme = window.localStorage.getItem("isDarkTheme");
+
+		if (isDarkTheme) {
+			setIsDark(isDarkTheme === "true" ? true : false);
+		}
+	}, []);
+
+	useEffect(() => {
 		if (isDark) {
 			document.documentElement.setAttribute("data-theme", "dark");
 		} else {
 			document.documentElement.setAttribute("data-theme", "light");
 		}
+		console.log(2);
 	}, [isDark]);
 
 	return (
