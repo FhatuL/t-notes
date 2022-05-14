@@ -5,7 +5,7 @@ import middleware from "./middleware";
 
 const app = express();
 app.disable("x-powered-by");
-const PORT = 5000;
+const PORT = 8080;
 
 app.use(middleware.cors);
 app.use(express.urlencoded({extended: false}));
